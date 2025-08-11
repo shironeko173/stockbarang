@@ -55,7 +55,7 @@ if(isset($_POST['addnewbarang'])){
 
                 // Cek & perbaiki permission folder kalau tidak bisa ditulis
                 if (!is_writable($folder)) {
-                    chmod($folder, 0777); // sementara full akses
+                    chmod($folder, 0777, true); // sementara full akses
                 }
 
                 // Path tujuan file
