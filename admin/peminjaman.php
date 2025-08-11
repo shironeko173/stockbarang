@@ -109,7 +109,7 @@ $count3 = mysqli_num_rows($get3); //menghitung seluruh kolom database yang statu
                                 <b style="color:white;"> Peminjaman Barang</b>
                             </a>
                             <hr>
-                            <a class="nav-link" href="Admin.php">
+                            <a class="nav-link" href="admin.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                                 Kelola Akun
                             </a>

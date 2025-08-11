@@ -69,7 +69,7 @@ $email = $_SESSION['email'];
                                 Peminjaman Barang
                             </a>
                             <hr>
-                            <a class="nav-link" href="Admin.php" style="background-color:#0ba7a7;">
+                            <a class="nav-link" href="admin.php" style="background-color:#0ba7a7;">
                                 <div class="sb-nav-link-icon" style="color:white;"><i class="fas fa-users"></i></div>
                                 <b style="color:white;">Kelola Akun</b>
                             </a>
