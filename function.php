@@ -14,7 +14,7 @@ if(isset($_POST['addnewbarang'])){
     $stock = $_POST['stock'];
 
     //Gambar
-    $allowed_extension = array('png','jpg');
+    $allowed_extension = array('png','jpg','jpeg');
     $nama =$_FILES['file']['name'];//ngambil nama file gambar
     $dot = explode('.',$nama);
     $ekstensi = strtolower(end($dot));//ngambil ekstensinya
@@ -65,7 +65,7 @@ if(isset($_POST['addnewbarang'])){
             //kalau filenya bukan png/jpg
             echo '
             <script>
-              alert("Maaf, File harus png/jpg.");
+              alert("Maaf, File harus png/jpg/jpeg.");
               window.location.href="home.php";
             </script>
             ';
@@ -91,7 +91,7 @@ if(isset($_POST['updatebarang'])){
     $deskripsi = $_POST['deskripsi'];
     
     //Gambar
-    $allowed_extension = array('png','jpg');
+    $allowed_extension = array('png','jpg','jpeg');
     $nama =$_FILES['file']['name'];//ngambil nama file gambar
     $dot = explode('.',$nama);
     $ekstensi = strtolower(end($dot));//ngambil ekstensinya
@@ -136,7 +136,7 @@ if(isset($_POST['updatebarang'])){
         //kalau filenya bukan png/jpg
         echo '
         <script>
-          alert("Maaf, File harus png/jpg.");
+          alert("Maaf, File harus png/jpg/jpeg.");
           window.location.href="home.php";
         </script>
         ';
