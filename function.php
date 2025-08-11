@@ -58,8 +58,6 @@ if(isset($_POST['addnewbarang'])){
                     chmod($folder, 0777); // sementara full akses
                 }
 
-                 $target_path = $folder . '/' . $image;
-
                 // Path tujuan file
                 $target_path = $folder . '/' . $image;
 
