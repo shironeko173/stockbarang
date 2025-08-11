@@ -48,36 +48,28 @@ if(isset($_POST['addnewbarang'])){
                 header('location:home.php?msg=gagal');
                 exit;
             }
-        } else if (in_array($ekstensi, $allowed_extension) === true) { 
-            // jika ingin upload gambar, proses upload gambar
-            if ($ukuran < 10000000) { // ~ 10MB
-                $folder = __DIR__ . '/images';
-
-                // Cek & perbaiki permission folder kalau tidak bisa ditulis
-                if (!is_writable($folder)) {
-                    chmod($folder, 0777, true); // sementara full akses
-                }
-
-                // Path tujuan file
-                $target_path = $folder . '/' . $image;
-
-                // Pindahkan file
-                if (move_uploaded_file($file_tmp, $target_path)) {
-                    $addtotable = mysqli_query($conn, "INSERT INTO stock (namabarang, deskripsi, stock, image) 
-                                                    VALUES ('$namabarang', '$deskripsi', '$stock', '$image')");
-                    if ($addtotable) {
-                        header('Location: home.php');
-                        exit();
-                    } else {
-                        header('Location: home.php?msg=gagal');
-                        exit();
-                    }
+        } else if(in_array($ekstensi, $allowed_extension) === true){// jika ingin upload gambar, proses upload gambar
+            //validasi ukuran file
+            if($ukuran < 100000000){ //~ 10mb
+                
+                move_uploaded_file($file_tmp, '/images/'.$image);
+                
+                $addtotable = mysqli_query($conn,"insert into stock (namabarang, deskripsi, stock, image) values('$namabarang','$deskripsi','$stock','$image')");
+                if($addtotable){
+                    header('location:home.php');
                 } else {
-                    echo "Gagal memindahkan file ke folder images.";
+                    header('location:home.php?msg=gagal');
                 }
             } else {
-                echo "Ukuran file terlalu besar.";
+                //kalau filenya lebih dari 10mb
+                echo '
+            <script>
+              alert("Maaf, Ukuran terlalu besar.");
+              window.location.href="home.php";
+            </script>
+            ';
             }
+
         } else {
             //kalau filenya bukan png/jpg
             echo '
