@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-$koneksi = mysqli_connect("mysql.railway.internal","root","UhMzqiSqKTqYJuSJxNMOuHvRqcasUVpb","railway");
+$koneksi = mysqli_connect("mysql.railway.internal","root","UhMzqiSqKTqYJuSJxNMOuHvRqcasUVpb","stockbarang");
 
 //login
 if(isset($_POST['login'])){
