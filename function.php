@@ -51,14 +51,25 @@ if(isset($_POST['addnewbarang'])){
         } else if(in_array($ekstensi, $allowed_extension) === true){// jika ingin upload gambar, proses upload gambar
             //validasi ukuran file
             if($ukuran < 100000000){ //~ 10mb
+
+                // Buat folder images jika belum ada
+                $uploadDir = 'images2/';
+                if (!file_exists($uploadDir)) {
+                    mkdir($uploadDir, 0777, true);
+                }
+
+                // Gunakan path relatif
+                move_uploaded_file($file_tmp, $uploadDir . $image);
                 
-                move_uploaded_file($file_tmp, '/images/'.$image);
+                // move_uploaded_file($file_tmp, '/images/'.$image);
                 
                 $addtotable = mysqli_query($conn,"insert into stock (namabarang, deskripsi, stock, image) values('$namabarang','$deskripsi','$stock','$image')");
                 if($addtotable){
                     header('location:home.php');
+                    exit;
                 } else {
                     header('location:home.php?msg=gagal');
+                    exit;
                 }
             } else {
                 //kalau filenya lebih dari 10mb
