@@ -51,7 +51,7 @@ if(isset($_POST['addnewbarang'])){
         } else if(in_array($ekstensi, $allowed_extension) === true){// jika ingin upload gambar, proses upload gambar
             //validasi ukuran file
             if($ukuran < 100000000){ //~ 10mb
-                move_uploaded_file($file_tmp, 'images/'.$image);
+                move_uploaded_file($file_tmp, '/images/'.$image);
                 
                 $addtotable = mysqli_query($conn,"insert into stock (namabarang, deskripsi, stock, image) values('$namabarang','$deskripsi','$stock','$image')");
                 if($addtotable){
@@ -120,7 +120,7 @@ if(isset($_POST['updatebarang'])){
     } else if(in_array($ekstensi, $allowed_extension) === true){// jika ingin update/upload gambar, proses upload gambar
         //validasi ukuran file
         if($ukuran < 100000000){ //~ 10mb
-            move_uploaded_file($file_tmp, 'images/'.$image);
+            move_uploaded_file($file_tmp, '/images/'.$image);
             
             $update = mysqli_query($conn,"update stock set namabarang='$namabarang', deskripsi='$deskripsi', image='$image' where idbarang = '$idb'");
     if($update){
@@ -157,7 +157,7 @@ if(isset($_POST['hapusbarang'])){
 
     $gambar = mysqli_query($conn, "select * from stock where idbarang='$idb'");
     $get = mysqli_fetch_array($gambar);
-    $img = 'images/'.$get['image'];
+    $img = '/images/'.$get['image'];
     unlink($img);
 
     $hapus = mysqli_query($conn, "delete from stock where idbarang='$idb'");
