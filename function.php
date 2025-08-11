@@ -2,7 +2,7 @@
 
 $_SESSION['previous_url'] = $_SERVER['REQUEST_URI'];
 //Membuat koneksi ke database
-$conn = mysqli_connect("localhost","root","","stockbarang");
+$conn = mysqli_connect("mysql.railway.internal","root","UhMzqiSqKTqYJuSJxNMOuHvRqcasUVpb","railway");
 
 
 //-------------------------------------------------------------------BAGIAN STOCK-HOME----------------------------------------------------------------//
