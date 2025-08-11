@@ -4,6 +4,14 @@ $_SESSION['previous_url'] = $_SERVER['REQUEST_URI'];
 //Membuat koneksi ke database
 $conn = mysqli_connect("mysql.railway.internal","root","UhMzqiSqKTqYJuSJxNMOuHvRqcasUVpb","stockbarang");
 
+    if (isset($_GET['msg'])) {
+        if ($_GET['msg'] == 'berhasil') {
+            echo "<p style='color: green;'>Data berhasil ditambahkan!</p>";
+        } elseif ($_GET['msg'] == 'gagal') {
+            echo "<p style='color: red;'>Data gagal ditambahkan!</p>";
+        }
+    }
+
 
 //-------------------------------------------------------------------BAGIAN STOCK-HOME----------------------------------------------------------------//
 
@@ -34,22 +42,22 @@ if(isset($_POST['addnewbarang'])){
             //jika tidak ingin upload gambar
             $addtotable = mysqli_query($conn,"insert into stock (namabarang, deskripsi, stock) values('$namabarang','$deskripsi','$stock')");
             if($addtotable){
-                header('location:home.php');
+                header('Location: home.php?msg=berhasil');
+                exit;
             } else {
-                echo 'Gagal';
-                header('location:home.php');
+                header('location:home.php?msg=gagal');
+                exit;
             }
         } else if(in_array($ekstensi, $allowed_extension) === true){// jika ingin upload gambar, proses upload gambar
             //validasi ukuran file
             if($ukuran < 100000000){ //~ 10mb
-                move_uploaded_file($file_tmp, '../images/'.$image);
+                move_uploaded_file($file_tmp, 'images/'.$image);
                 
                 $addtotable = mysqli_query($conn,"insert into stock (namabarang, deskripsi, stock, image) values('$namabarang','$deskripsi','$stock','$image')");
                 if($addtotable){
                     header('location:home.php');
                 } else {
-                    echo 'Gagal ';
-                    header('location:home.php');
+                    header('location:home.php?msg=gagal');
                 }
             } else {
                 //kalau filenya lebih dari 10mb
@@ -107,20 +115,18 @@ if(isset($_POST['updatebarang'])){
     if($update){
             header('location:home.php');
         } else {
-            echo 'Gagal';
-            header('location:home.php');
+            header('location:home.php?msg=gagal');
         }
     } else if(in_array($ekstensi, $allowed_extension) === true){// jika ingin update/upload gambar, proses upload gambar
         //validasi ukuran file
         if($ukuran < 100000000){ //~ 10mb
-            move_uploaded_file($file_tmp, '../images/'.$image);
+            move_uploaded_file($file_tmp, 'images/'.$image);
             
             $update = mysqli_query($conn,"update stock set namabarang='$namabarang', deskripsi='$deskripsi', image='$image' where idbarang = '$idb'");
     if($update){
                 header('location:home.php');
             } else {
-                echo 'Gagal Pak';
-                header('location:home.php');
+                header('location:home.php?msg=gagal');
             }
         } else {
             //kalau filenya lebih dari 10mb
@@ -151,15 +157,14 @@ if(isset($_POST['hapusbarang'])){
 
     $gambar = mysqli_query($conn, "select * from stock where idbarang='$idb'");
     $get = mysqli_fetch_array($gambar);
-    $img = '../images/'.$get['image'];
+    $img = 'images/'.$get['image'];
     unlink($img);
 
     $hapus = mysqli_query($conn, "delete from stock where idbarang='$idb'");
     if($hapus){
         header('location:home.php');
     } else {
-        echo 'Gagal Pak';
-        header('location:home.php'); 
+        header('location:home.php?msg=gagal'); 
     }
     
 };
@@ -321,8 +326,7 @@ if(isset($_POST['updatebarangkeluar'])){
                 if($kurangistocknya&&$updatenya){
                     header('location:keluar.php');
                 } else {
-                    echo 'Gagal';
-                    header('location:keluar.php');
+                    header('location:keluar.php?msg=gagal');
                 }
         } else {
             $selisih = $qtyskrg-$qty;
@@ -333,8 +337,7 @@ if(isset($_POST['updatebarangkeluar'])){
             if($tambahistocknya&&$updatenya){
                 header('location:keluar.php');
             } else {
-                echo 'Gagal';
-                header('location:keluar.php');
+                header('location:keluar.php?msg=gagal');
             }
         }
     } else {
@@ -368,8 +371,7 @@ if(isset($_POST['hapusbarangkeluar'])){
     if($update&&$hapusdata){
         header('location:keluar.php');
     } else{
-        echo 'Gagal Pak';
-        header('location:keluar.php');
+        header('location:keluar.php?msg=gagal');
     }
 
 }
