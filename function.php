@@ -53,15 +53,12 @@ if(isset($_POST['addnewbarang'])){
             if ($ukuran < 10000000) { // ~ 10MB
                 $folder = __DIR__ . '/images';
 
-                // Cek apakah folder ada, kalau tidak buat
-                if (!is_dir($folder)) {
-                    mkdir($folder, 0755, true);
+                // Cek & perbaiki permission folder kalau tidak bisa ditulis
+                if (!is_writable($folder)) {
+                    chmod($folder, 0777); // sementara full akses
                 }
 
-                // Cek permission folder
-                if (!is_writable($folder)) {
-                    chmod($folder, 0755);
-                }
+                 $target_path = $folder . '/' . $image;
 
                 // Path tujuan file
                 $target_path = $folder . '/' . $image;
