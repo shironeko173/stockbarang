@@ -52,14 +52,9 @@ if(isset($_POST['addnewbarang'])){
             //validasi ukuran file
             if($ukuran < 100000000){ //~ 10mb
 
-                // Buat folder images jika belum ada
-                $uploadDir = 'images2/';
-                if (!file_exists($uploadDir)) {
-                    mkdir($uploadDir, 0777, true);
-                }
 
                 // Gunakan path relatif
-                move_uploaded_file($file_tmp, $uploadDir . $image);
+                move_uploaded_file($file_tmp, 'images/'.$image);
                 
                 // move_uploaded_file($file_tmp, '/images/'.$image);
                 
