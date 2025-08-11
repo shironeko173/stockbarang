@@ -15,82 +15,92 @@ $conn = mysqli_connect("mysql.railway.internal","root","UhMzqiSqKTqYJuSJxNMOuHvR
 
 //-------------------------------------------------------------------BAGIAN STOCK-HOME----------------------------------------------------------------//
 
-// Update info barang
-if(isset($_POST['updatebarang'])) {
-    $idb = $_POST['idb'];
+//Menambah barang baru 
+if(isset($_POST['addnewbarang'])){
     $namabarang = $_POST['namabarang'];
     $deskripsi = $_POST['deskripsi'];
-    
-    // Konfigurasi upload gambar
+    $stock = $_POST['stock'];
+
+    //Gambar
     $allowed_extension = array('png','jpg','jpeg');
-    $nama = $_FILES['file']['name'];
+    $nama =$_FILES['file']['name'];//ngambil nama file gambar
     $dot = explode('.',$nama);
-    $ekstensi = strtolower(end($dot));
-    $ukuran = $_FILES['file']['size'];
-    $file_tmp = $_FILES['file']['tmp_name'];
+    $ekstensi = strtolower(end($dot));//ngambil ekstensinya
+    $ukuran = $_FILES['file']['size']; // ngambil size filenya
+    $file_tmp = $_FILES['file']['tmp_name']; //ngambil lokasi filenya
 
-    // Penamaan file
-    $image = md5(uniqid($nama, true) . time() . '.' . $ekstensi);
+    //penamaan file -> enkripsi (mencegah nama yang sama)
+    $image = md5(uniqid($nama,true) . time()).'.'.$ekstensi; //menggabungkan nama file yang dienkripsi dengan ekstensinya
 
-    // Folder upload - sesuaikan dengan Railway
-    $uploadDir = __DIR__ . '/images/';
-    
-    // Buat folder jika belum ada
-    if (!file_exists($uploadDir)) {
-        mkdir($uploadDir, 0755, true);
-    }
+    //validasi udah ada atau belum
+    $cek = mysqli_query($conn,"select * from stock where namabarang='$namabarang'");
+    $hitung = mysqli_num_rows($cek);
 
-    if($ukuran == 0) {
-        // Jika tidak ingin update gambar
-        $update = mysqli_query($conn, "UPDATE stock SET namabarang='$namabarang', deskripsi='$deskripsi' WHERE idbarang = '$idb'");
-        
-        if($update) {
-            header('location:home.php?msg=update_berhasil');
-            exit;
-        } else {
-            header('location:home.php?msg=gagal_update');
-            exit;
-        }
-    } 
-    else if(in_array($ekstensi, $allowed_extension)) {
-        // Jika ingin update gambar
-        if($ukuran < 10000000) { // ~10MB
-            $targetPath = $uploadDir . $image;
-            
-            // Hapus gambar lama jika ada
-            $query = mysqli_query($conn, "SELECT image FROM stock WHERE idbarang = '$idb'");
-            $data = mysqli_fetch_array($query);
-            if(!empty($data['image']) && file_exists($uploadDir . $data['image'])) {
-                unlink($uploadDir . $data['image']);
+    if($hitung<1){
+        //jika belum ada
+        if($ukuran==0){
+            //jika tidak ingin upload gambar
+            $addtotable = mysqli_query($conn,"insert into stock (namabarang, deskripsi, stock) values('$namabarang','$deskripsi','$stock')");
+            if($addtotable){
+                header('Location: home.php?msg=berhasil');
+                exit;
+            } else {
+                header('location:home.php?msg=gagal');
+                exit;
             }
-            
-            if(move_uploaded_file($file_tmp, $targetPath)) {
-                $update = mysqli_query($conn, "UPDATE stock SET namabarang='$namabarang', deskripsi='$deskripsi', image='$image' WHERE idbarang = '$idb'");
+        } else if(in_array($ekstensi, $allowed_extension) === true){// jika ingin upload gambar, proses upload gambar
+            //validasi ukuran file
+            if($ukuran < 100000000){ //~ 10mb
+
+                // Buat folder images jika belum ada
+                $uploadDir = 'images2/';
+                if (!file_exists($uploadDir)) {
+                    mkdir($uploadDir, 0777, true);
+                }
+
+                // Gunakan path relatif
+                move_uploaded_file($file_tmp, $uploadDir . $image);
                 
-                if($update) {
-                    header('location:home.php?msg=update_berhasil');
+                // move_uploaded_file($file_tmp, '/images/'.$image);
+                
+                $addtotable = mysqli_query($conn,"insert into stock (namabarang, deskripsi, stock, image) values('$namabarang','$deskripsi','$stock','$image')");
+                if($addtotable){
+                    header('location:home.php');
                     exit;
                 } else {
-                    // Hapus file yang sudah diupload jika query gagal
-                    unlink($targetPath);
-                    header('location:home.php?msg=gagal_update');
+                    header('location:home.php?msg=gagal');
                     exit;
                 }
             } else {
-                header('location:home.php?msg=gagal_upload');
-                exit;
+                //kalau filenya lebih dari 10mb
+                echo '
+            <script>
+              alert("Maaf, Ukuran terlalu besar.");
+              window.location.href="home.php";
+            </script>
+            ';
             }
+
         } else {
-            // File terlalu besar
-            header('location:home.php?msg=ukuran_besar');
-            exit;
+            //kalau filenya bukan png/jpg
+            echo '
+            <script>
+              alert("Maaf, File harus png/jpg/jpeg.");
+              window.location.href="home.php";
+            </script>
+            ';
         }
-    } else {
-        // Ekstensi tidak diizinkan
-        header('location:home.php?msg=ekstensi_tidak_valid');
-        exit;
-    }
-}
+
+  } else {
+      //jika sudah ada nama barangnya
+      echo '
+      <script>
+        alert("Maaf, Nama barang sudah terdaftar. Silahkan Add barang pada menu Barang Masuk.");
+        window.location.href="home.php";
+      </script>
+      ';
+  }
+};
 
 
 
