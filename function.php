@@ -595,18 +595,22 @@ if(isset($_POST['addnewpesan'])){
 //     exit;
 // }
 
-$filename = basename($_GET['img']);
-$file = '/mnt/stockbarang_images/' . $filename;
+if (isset($_GET['img'])) {
+    $filename = basename($_GET['img']);
+    $file = '/mnt/stockbarang_images/' . $filename;
 
-if (file_exists($file) && is_file($file)) {
-    $mime = mime_content_type($file);
-    header('Content-Type: ' . $mime);
-    readfile($file);
-    exit;
-} else {
-    http_response_code(404);
-    echo "File tidak ditemukan.";
+    if (file_exists($file) && is_file($file)) {
+        $mime = mime_content_type($file);
+        header('Content-Type: ' . $mime);
+        readfile($file);
+        exit;
+    } else {
+        http_response_code(404);
+        echo "File tidak ditemukan.";
+    }
 }
+
+
 
 
 ?>
