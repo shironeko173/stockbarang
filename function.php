@@ -55,7 +55,7 @@ if(isset($_POST['addnewbarang'])){
 
                 // Gunakan path relatif
                 // move_uploaded_file($file_tmp, '/images/'.$image);
-                move_uploaded_file($file_tmp, '/storage/'.$image); //Railway Path
+                move_uploaded_file($file_tmp, 'app/storage/'.$image); //Railway Path
                 
                 $addtotable = mysqli_query($conn,"insert into stock (namabarang, deskripsi, stock, image) values('$namabarang','$deskripsi','$stock','$image')");
                 if($addtotable){
@@ -130,7 +130,7 @@ if(isset($_POST['updatebarang'])){
         if($ukuran < 100000000){ //~ 10mb
             
             // move_uploaded_file($file_tmp, '/images/'.$image);
-            move_uploaded_file($file_tmp, '/storage/'.$image); // Path Railway
+            move_uploaded_file($file_tmp, 'app/storage/'.$image); // Path Railway
             
             $update = mysqli_query($conn,"update stock set namabarang='$namabarang', deskripsi='$deskripsi', image='$image' where idbarang = '$idb'");
     if($update){
@@ -170,7 +170,7 @@ if(isset($_POST['hapusbarang'])){
     $gambar = mysqli_query($conn, "select * from stock where idbarang='$idb'");
     $get = mysqli_fetch_array($gambar);
     // $img = 'images/'.$get['image'];
-    $img = '/storage/'.$get['image']; //Railway path
+    $img = 'app/storage/'.$get['image']; //Railway path
     unlink($img);
 
     $hapus = mysqli_query($conn, "delete from stock where idbarang='$idb'");
