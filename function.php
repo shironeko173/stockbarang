@@ -14,8 +14,9 @@ $conn = mysqli_connect("mysql.railway.internal","root","UhMzqiSqKTqYJuSJxNMOuHvR
 
 // storage Railway
 $folder = __DIR__ . '/stockbarang_images';
-if (!file_exists($folder)) {
-    mkdir($folder, 0777, true);
+if (file_exists($folder)) {
+    // mkdir($folder, 0777, true);
+    echo "ada";
 }
 
 
