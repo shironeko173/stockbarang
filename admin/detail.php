@@ -29,7 +29,7 @@ $stock = $fetch['stock'];
      $img = 'No Photo';
  } else {
      //jika ada gambar
-     $img = '<img src="../images/'.$gambar.'" class="zoomable">';
+     $img = '<img src="../storage/'.$gambar.'" class="zoomable">';
  }
 
 

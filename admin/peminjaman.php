@@ -226,7 +226,7 @@ $count3 = mysqli_num_rows($get3); //menghitung seluruh kolom database yang statu
                                                 $img = 'No Photo';
                                             } else {
                                                 //jika ada gambar
-                                                $img = '<img src="../images/'.$gambar.'" class="zoomable">';
+                                                $img = '<img src="../storage/'.$gambar.'" class="zoomable">';
                                             }
                                         
                                         ?>
