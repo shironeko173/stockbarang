@@ -587,4 +587,22 @@ if(isset($_POST['addnewpesan'])){
 
 };
 
+//-------------------------------------------------------------BAGIAN FUNGSI TAMBAHAN-----------------------------------------------------------//
+//Fungsi untuk mendapatkan gambar berdasarkan nama
+$file = '/mnt/stockbarang_images/' . basename($_GET['file']);
+
+if (file_exists($file)) {
+    $mime = mime_content_type($file);
+    header('Content-Type: ' . $mime);
+    readfile($file);
+    exit;
+} else {
+    http_response_code(404);
+    echo "File tidak ditemukan.";
+}
+
+
 ?>
+
+
+

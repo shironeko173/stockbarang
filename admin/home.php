@@ -161,7 +161,8 @@ $email = $_SESSION['email'];
                                                 $img = 'No Photo';
                                             } else {
                                                 //jika ada gambar
-                                                $img = '<img src="../images/'.$gambar.'" class="zoomable">';
+                                                // $img = '<img src="../images/'.$gambar.'" class="zoomable">';
+                                                $img = '<img src="get_image.php?file=' . urlencode($gambar) . '" class="zoomable">';//for railway
                                             }
                                         
                                         ?>
