@@ -13,7 +13,7 @@ $conn = mysqli_connect("mysql.railway.internal","root","UhMzqiSqKTqYJuSJxNMOuHvR
     }
 
 // storage Railway
-$folder = '/app/stockbarang_images';
+$folder = '/app/images';
 
 // Cek apakah folder ada
 if (!file_exists($folder)) {
