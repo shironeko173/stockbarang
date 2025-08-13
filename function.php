@@ -12,6 +12,8 @@ $conn = mysqli_connect("mysql.railway.internal","root","UhMzqiSqKTqYJuSJxNMOuHvR
         }
     }
 
+    $folder = __DIR__ . '/storage_uploads';
+
     // Cek izin
     $perms = substr(sprintf('%o', fileperms($folder)), -4);
     if ($perms !== '0777') {
