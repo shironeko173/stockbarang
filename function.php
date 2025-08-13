@@ -14,19 +14,34 @@ $conn = mysqli_connect("mysql.railway.internal","root","UhMzqiSqKTqYJuSJxNMOuHvR
 
 // storage Railway
 $folder = '/mnt/stockbarang_images';
-if (file_exists($folder)) {
-    $testFile = $folder . '/test.txt';
-    $content = "Tes tulis file pada " . date('Y-m-d H:i:s');
 
-    // Coba tulis file
-    if (file_put_contents($testFile, $content) !== false) {
-        echo "✅ Berhasil membuat file test.txt di folder stockbarang_images".$folder;
-    } else {
-        echo "❌ Gagal membuat file di folder stockbarang_images (permission error)".$folder;
-    }
-} else {
-    echo "❌ Folder tidak ditemukan";
+// Cek apakah folder ada
+if (!file_exists($folder)) {
+    echo "❌ Folder tidak ditemukan\n";
+    exit;
 }
+
+// Cek permission
+clearstatcache();
+$perms = substr(sprintf('%o', fileperms($folder)), -4);
+echo "📂 Permission folder: $perms\n";
+
+// Coba chmod (kalau diizinkan)
+if (@chmod($folder, 0777)) {
+    echo "✅ chmod berhasil\n";
+} else {
+    echo "⚠️ chmod gagal\n";
+}
+
+// Coba tulis file
+$testFile = $folder . '/test.txt';
+if (@file_put_contents($testFile, 'Hello Railway!') !== false) {
+    echo "✅ Berhasil membuat file $testFile\n";
+} else {
+    echo "❌ Gagal membuat file (permission error)\n";
+    echo "Error: " . error_get_last()['message'] . "\n";
+}
+
 
 
 //-------------------------------------------------------------------BAGIAN STOCK-HOME----------------------------------------------------------------//
