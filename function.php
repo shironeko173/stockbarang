@@ -12,7 +12,7 @@ $conn = mysqli_connect("mysql.railway.internal","root","UhMzqiSqKTqYJuSJxNMOuHvR
         }
     }
 
-        $folder = __DIR__ . '/storage_uploads';
+        $folder = __DIR__ . '/storage_images';
 
         // Cek apakah folder ada
         if (file_exists($folder)) {
