@@ -12,37 +12,6 @@ $conn = mysqli_connect("mysql.railway.internal","root","UhMzqiSqKTqYJuSJxNMOuHvR
         }
     }
 
-// storage Railway
-$folder = '/app/storage';
-
-// Cek apakah folder ada
-if (!file_exists($folder)) {
-    echo "❌ Folder tidak ditemukan\n";
-    exit;
-}
-
-// Cek permission
-clearstatcache();
-$perms = substr(sprintf('%o', fileperms($folder)), -4);
-echo "📂 Permission folder: $perms\n";
-
-// Coba chmod (kalau diizinkan)
-if (@chmod($folder, 0777)) {
-    echo "✅ chmod berhasil\n";
-} else {
-    echo "⚠️ chmod gagal\n";
-}
-
-// Coba tulis file
-$testFile = $folder . '/test.txt';
-if (@file_put_contents($testFile, 'Hello Railway!') !== false) {
-    echo "✅ Berhasil membuat file $testFile\n";
-} else {
-    echo "❌ Gagal membuat file (permission error)\n";
-    echo "Error: " . error_get_last()['message'] . "\n";
-}
-
-
 
 //-------------------------------------------------------------------BAGIAN STOCK-HOME----------------------------------------------------------------//
 
@@ -86,7 +55,7 @@ if(isset($_POST['addnewbarang'])){
 
                 // Gunakan path relatif
                 // move_uploaded_file($file_tmp, '/images/'.$image);
-                move_uploaded_file($file_tmp, '/app/stockbarang_images/'.$image); //Railway Path
+                move_uploaded_file($file_tmp, '/storage/'.$image); //Railway Path
                 
                 $addtotable = mysqli_query($conn,"insert into stock (namabarang, deskripsi, stock, image) values('$namabarang','$deskripsi','$stock','$image')");
                 if($addtotable){
@@ -161,7 +130,7 @@ if(isset($_POST['updatebarang'])){
         if($ukuran < 100000000){ //~ 10mb
             
             // move_uploaded_file($file_tmp, '/images/'.$image);
-            move_uploaded_file($file_tmp, '/app/stockbarang_images/'.$image); // Path Railway
+            move_uploaded_file($file_tmp, '/storage/'.$image); // Path Railway
             
             $update = mysqli_query($conn,"update stock set namabarang='$namabarang', deskripsi='$deskripsi', image='$image' where idbarang = '$idb'");
     if($update){
@@ -201,7 +170,7 @@ if(isset($_POST['hapusbarang'])){
     $gambar = mysqli_query($conn, "select * from stock where idbarang='$idb'");
     $get = mysqli_fetch_array($gambar);
     // $img = 'images/'.$get['image'];
-    $img = '/app/stockbarang_images/'.$get['image']; //Railway path
+    $img = '/storage/'.$get['image']; //Railway path
     unlink($img);
 
     $hapus = mysqli_query($conn, "delete from stock where idbarang='$idb'");
@@ -617,31 +586,6 @@ if(isset($_POST['addnewpesan'])){
     }
 
 };
-
-//-------------------------------------------------------------BAGIAN FUNGSI TAMBAHAN-----------------------------------------------------------//
-// Pastikan parameter file dikirim
-// if (!isset($_GET['file']) || empty($_GET['file'])) {
-//     http_response_code(400);
-//     echo "Parameter 'file' tidak ditemukan.";
-//     exit;
-// }
-
-if (isset($_GET['img'])) {
-    $filename = basename($_GET['img']);
-    $file = '/app/stockbarang_images/' . $filename;
-
-    if (file_exists($file) && is_file($file)) {
-        $mime = mime_content_type($file);
-        header('Content-Type: ' . $mime);
-        readfile($file);
-        exit;
-    } else {
-        http_response_code(404);
-        echo "File tidak ditemukan.";
-    }
-}
-
-
 
 
 ?>
