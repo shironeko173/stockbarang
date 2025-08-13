@@ -162,7 +162,7 @@ $email = $_SESSION['email'];
                                             } else {
                                                 //jika ada gambar
                                                 // $img = '<img src="../images/'.$gambar.'" class="zoomable">';
-                                                $img = '<img src="get_image.php?file=' . urlencode($gambar) . '" class="zoomable">';//for railway
+                                                $img = '<img src="get_image.php?img=' . urlencode($gambar) . '" class="zoomable">';//for railway
                                             }
                                         
                                         ?>

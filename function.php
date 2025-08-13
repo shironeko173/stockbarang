@@ -595,7 +595,7 @@ if(isset($_POST['addnewpesan'])){
 //     exit;
 // }
 
-$filename = basename($_GET['file']);
+$filename = basename($_GET['img']);
 $file = '/mnt/stockbarang_images/' . $filename;
 
 if (file_exists($file) && is_file($file)) {
