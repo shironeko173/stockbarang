@@ -12,6 +12,19 @@ $conn = mysqli_connect("mysql.railway.internal","root","UhMzqiSqKTqYJuSJxNMOuHvR
         }
     }
 
+// Railway path untuk menyimpan gambar
+$folder = '/mnt/stockbarang_images';
+
+// Pastikan folder ada
+if (!file_exists($folder)) {
+    mkdir($folder, 0777, true);
+}
+
+// Pastikan folder bisa ditulis
+if (!is_writable($folder)) {
+    chmod($folder, 0777);
+}
+
 
 //-------------------------------------------------------------------BAGIAN STOCK-HOME----------------------------------------------------------------//
 
