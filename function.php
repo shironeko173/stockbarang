@@ -12,27 +12,7 @@ $conn = mysqli_connect("mysql.railway.internal","root","UhMzqiSqKTqYJuSJxNMOuHvR
         }
     }
 
-        $folder = __DIR__ . '/storage';
-
-        // Cek apakah folder ada
-        if (file_exists($folder)) {
-            echo "📂 Folder ada: $folder<br>";
-
-            // Cek apakah writable
-            if (is_writable($folder)) {
-                echo "✅ Folder bisa ditulis oleh PHP<br>";
-            } else {
-                echo "❌ Folder TIDAK bisa ditulis oleh PHP<br>";
-            }
-
-            // Cek permission (Linux-style)
-            $perms = fileperms($folder);
-            echo "📄 Permission (octal): " . substr(sprintf('%o', $perms), -4) . "<br>";
-        } else {
-            echo "❌ Folder tidak ditemukan: $folder<br>";
-        }
-
-
+       
 //-------------------------------------------------------------------BAGIAN STOCK-HOME----------------------------------------------------------------//
 
 //Menambah barang baru 
