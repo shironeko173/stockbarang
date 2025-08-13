@@ -12,6 +12,21 @@ $conn = mysqli_connect("mysql.railway.internal","root","UhMzqiSqKTqYJuSJxNMOuHvR
         }
     }
 
+    $folder = __DIR__ . '/storage_uploads';
+
+    // Pastikan folder ada
+    if (!file_exists($folder)) {
+        mkdir($folder, 0777, true);
+    }
+
+    // Cek izin
+    $perms = substr(sprintf('%o', fileperms($folder)), -4);
+    if ($perms !== '0777') {
+        @chmod($folder, 0777); // Tidak error walau gagal
+    }
+
+    echo "📂 Permission folder: " . substr(sprintf('%o', fileperms($folder)), -4) . PHP_EOL;
+
 
 //-------------------------------------------------------------------BAGIAN STOCK-HOME----------------------------------------------------------------//
 
