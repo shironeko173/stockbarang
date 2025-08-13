@@ -14,14 +14,19 @@ $conn = mysqli_connect("mysql.railway.internal","root","UhMzqiSqKTqYJuSJxNMOuHvR
 
 // storage Railway
 $folder = __DIR__ . '/stockbarang_images';
-if (!is_writable($folder)) {
-    chmod($folder, 0777); // memberi full akses sementara
-}
+if (file_exists($folder)) {
+    $testFile = $folder . '/test.txt';
+    $content = "Tes tulis file pada " . date('Y-m-d H:i:s');
 
-if (!is_writable($folder)) {
-    die("Folder tidak bisa ditulis, permission error");
+    // Coba tulis file
+    if (file_put_contents($testFile, $content) !== false) {
+        echo "✅ Berhasil membuat file test.txt di folder stockbarang_images";
+    } else {
+        echo "❌ Gagal membuat file di folder stockbarang_images (permission error)";
+    }
+} else {
+    echo "❌ Folder tidak ditemukan";
 }
-
 
 
 //-------------------------------------------------------------------BAGIAN STOCK-HOME----------------------------------------------------------------//
