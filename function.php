@@ -588,10 +588,17 @@ if(isset($_POST['addnewpesan'])){
 };
 
 //-------------------------------------------------------------BAGIAN FUNGSI TAMBAHAN-----------------------------------------------------------//
-//Fungsi untuk mendapatkan gambar berdasarkan nama
-$file = '/mnt/stockbarang_images/' . basename($_GET['file']);
+// Pastikan parameter file dikirim
+if (!isset($_GET['file']) || empty($_GET['file'])) {
+    http_response_code(400);
+    echo "Parameter 'file' tidak ditemukan.";
+    exit;
+}
 
-if (file_exists($file)) {
+$filename = basename($_GET['file']);
+$file = '/mnt/stockbarang_images/' . $filename;
+
+if (file_exists($file) && is_file($file)) {
     $mime = mime_content_type($file);
     header('Content-Type: ' . $mime);
     readfile($file);
