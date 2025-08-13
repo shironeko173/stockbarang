@@ -20,9 +20,9 @@ if (file_exists($folder)) {
 
     // Coba tulis file
     if (file_put_contents($testFile, $content) !== false) {
-        echo "✅ Berhasil membuat file test.txt di folder stockbarang_images";
+        echo "✅ Berhasil membuat file test.txt di folder stockbarang_images".$folder;
     } else {
-        echo "❌ Gagal membuat file di folder stockbarang_images (permission error)";
+        echo "❌ Gagal membuat file di folder stockbarang_images (permission error)".$folder;
     }
 } else {
     echo "❌ Folder tidak ditemukan";
