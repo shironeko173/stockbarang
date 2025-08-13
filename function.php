@@ -589,11 +589,11 @@ if(isset($_POST['addnewpesan'])){
 
 //-------------------------------------------------------------BAGIAN FUNGSI TAMBAHAN-----------------------------------------------------------//
 // Pastikan parameter file dikirim
-if (!isset($_GET['file']) || empty($_GET['file'])) {
-    http_response_code(400);
-    echo "Parameter 'file' tidak ditemukan.";
-    exit;
-}
+// if (!isset($_GET['file']) || empty($_GET['file'])) {
+//     http_response_code(400);
+//     echo "Parameter 'file' tidak ditemukan.";
+//     exit;
+// }
 
 $filename = basename($_GET['file']);
 $file = '/mnt/stockbarang_images/' . $filename;
