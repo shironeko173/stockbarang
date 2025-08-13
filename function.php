@@ -14,9 +14,12 @@ $conn = mysqli_connect("mysql.railway.internal","root","UhMzqiSqKTqYJuSJxNMOuHvR
 
 // storage Railway
 $folder = __DIR__ . '/stockbarang_images';
-if (file_exists($folder)) {
-    // mkdir($folder, 0777, true);
-    echo "ada";
+if (!is_writable($folder)) {
+    chmod($folder, 0777); // memberi full akses sementara
+}
+
+if (!is_writable($folder)) {
+    die("Folder tidak bisa ditulis, permission error");
 }
 
 
