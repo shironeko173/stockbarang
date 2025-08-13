@@ -54,9 +54,8 @@ if(isset($_POST['addnewbarang'])){
 
 
                 // Gunakan path relatif
-                move_uploaded_file($file_tmp, 'images/'.$image);
-                
                 // move_uploaded_file($file_tmp, '/images/'.$image);
+                move_uploaded_file($file_tmp, '/mnt/stockbarang_images/'.$image); //Railway Path
                 
                 $addtotable = mysqli_query($conn,"insert into stock (namabarang, deskripsi, stock, image) values('$namabarang','$deskripsi','$stock','$image')");
                 if($addtotable){
@@ -129,7 +128,9 @@ if(isset($_POST['updatebarang'])){
     } else if(in_array($ekstensi, $allowed_extension) === true){// jika ingin update/upload gambar, proses upload gambar
         //validasi ukuran file
         if($ukuran < 100000000){ //~ 10mb
-            move_uploaded_file($file_tmp, '/images/'.$image);
+            
+            // move_uploaded_file($file_tmp, '/images/'.$image);
+            move_uploaded_file($file_tmp, '/mnt/stockbarang_images/'.$image); // Path Railway
             
             $update = mysqli_query($conn,"update stock set namabarang='$namabarang', deskripsi='$deskripsi', image='$image' where idbarang = '$idb'");
     if($update){
@@ -168,7 +169,8 @@ if(isset($_POST['hapusbarang'])){
 
     $gambar = mysqli_query($conn, "select * from stock where idbarang='$idb'");
     $get = mysqli_fetch_array($gambar);
-    $img = '/images/'.$get['image'];
+    // $img = 'images/'.$get['image'];
+    $img = '/mnt/stockbarang_images/'.$get['image']; //Railway path
     unlink($img);
 
     $hapus = mysqli_query($conn, "delete from stock where idbarang='$idb'");
@@ -203,8 +205,7 @@ if(isset($_POST['barangmasuk'])){
         header('location:masuk.php');
         exit;
     } else {
-        echo 'Gagal';
-        header('location:masuk.php');
+        header('location:masuk.php?msg=gagal');
         exit;
     }
 };
@@ -234,8 +235,7 @@ if(isset($_POST['updatebarangmasuk'])){
             header('location:masuk.php');
             exit;
         } else {
-            echo 'Gagal';
-            header('location:masuk.php');
+            header('location:masuk.php?msg=gagal');
             exit;
         }
     } else {
@@ -248,8 +248,7 @@ if(isset($_POST['updatebarangmasuk'])){
             header('location:masuk.php');
             exit;
         } else {
-            echo 'Gagal';
-            header('location:masuk.php');
+            header('location:masuk.php?msg=gagal');
             exit;
         }
     }
@@ -274,8 +273,7 @@ if(isset($_POST['hapusbarangmasuk'])){
         header('location:masuk.php');
         exit;
     } else{
-        echo 'Gagal ';
-        header('location:masuk.php');
+        header('location:masuk.php?msg=gagal');
         exit;
     }
 
@@ -305,8 +303,7 @@ if(isset($_POST['addbarangkeluar'])){
             header('location:keluar.php');
             exit;
     } else {
-        echo 'Gagal';
-        header('location:keluar.php');
+        header('location:keluar.php?msg=gagal');
         exit;
         }
     } else {
