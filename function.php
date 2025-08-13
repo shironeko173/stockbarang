@@ -13,7 +13,7 @@ $conn = mysqli_connect("mysql.railway.internal","root","UhMzqiSqKTqYJuSJxNMOuHvR
     }
 
 // storage Railway
-$folder = __DIR__ . '/stockbarang_images';
+$folder = '/mnt/stockbarang_images';
 if (file_exists($folder)) {
     $testFile = $folder . '/test.txt';
     $content = "Tes tulis file pada " . date('Y-m-d H:i:s');
