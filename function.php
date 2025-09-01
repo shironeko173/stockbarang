@@ -2,7 +2,7 @@
 
 $_SESSION['previous_url'] = $_SERVER['REQUEST_URI'];
 //Membuat koneksi ke database
-$conn = mysqli_connect("mysql.railway.internal","root","UhMzqiSqKTqYJuSJxNMOuHvRqcasUVpb","stockbarang");
+$conn = mysqli_connect("mysql.railway.internal","root","AKascEkJYbnhFoejtQkIorFpuEHyjFif","stockbarang");
 
     if (isset($_GET['msg'])) {
         if ($_GET['msg'] == 'berhasil') {
